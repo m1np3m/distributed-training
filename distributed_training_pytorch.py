@@ -18,13 +18,19 @@ def train_func():
 
     def SimpleNN():
         model = Sequential()
-        model.add(Dense(10000, input_dim=10, activation='relu'))  # 10 input features to 50 hidden units
-        model.add(Dense(1, activation='sigmoid'))
+        model.add(
+            Dense(10000, input_dim=10, activation="relu")
+        )  # 10 input features to 50 hidden units
+        model.add(Dense(1, activation="sigmoid"))
 
         return model
 
     model = SimpleNN()
-    model.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(
+        optimizer=Adam(learning_rate=0.01),
+        loss="binary_crossentropy",
+        metrics=["accuracy"],
+    )
 
     np.random.seed(0)
 
@@ -42,9 +48,9 @@ if __name__ == "__main__":
     job_name = datetime.utcnow().strftime("%m-%d-%Y-%H-%M-%S")
 
     training_client = TrainingClient(
-        context="mle",
+        context="mle",  # Cluster name
         namespace="kubeflow",
-        job_kind=constants.PYTORCHJOB_KIND
+        job_kind=constants.PYTORCHJOB_KIND,
     )
 
     result = training_client.create_job(
